@@ -15,7 +15,7 @@ class _BettingState extends State<Betting> {
   bool _isStart = false;
 
   void _startButton() {
-    if (!_isStart) {
+    if (!_isStart && ActionsGame.controllerParser() > 0) {
       setState(() {
         _money -= ActionsGame.controllerParser();
         _isStart = true;
