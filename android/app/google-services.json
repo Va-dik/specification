@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "561846838432",
+    "project_id": "specification-aebed",
+    "storage_bucket": "specification-aebed.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:561846838432:android:3251d69c496cff94ac55c5",
+        "android_client_info": {
+          "package_name": "com.example.specification"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "561846838432-oki4aao61erlggi5595avehnff30vvgi.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDeux8yheCpRbblEwqe6bFGmjgRvF1LSBc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "561846838432-oki4aao61erlggi5595avehnff30vvgi.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
