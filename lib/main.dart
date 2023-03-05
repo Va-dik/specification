@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Specification',
+      title: 'Пари',
       home: FutureBuilder(
         future: _firebaseApp,
         builder: (context, snapshot) {

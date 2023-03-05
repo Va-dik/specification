@@ -41,77 +41,87 @@ class _BettingState extends State<Betting> {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          SizedBox(
-            height: MediaQuery.of(context).size.height / 3.5,
-          ),
-          Align(
-            alignment: Alignment.centerLeft,
-            child: TextButton.icon(
-              onPressed: null,
-              icon: Image.asset(
-                'assets/icons/coin.png',
-                scale: 12,
+    return Stack(
+      fit: StackFit.expand,
+      children: [
+        Image.asset(
+          'assets/icons/background.jpeg',
+          fit: BoxFit.cover,
+        ),
+        SingleChildScrollView(
+          child: Column(
+            children: [
+              SizedBox(
+                height: MediaQuery.of(context).size.height / 3.5,
               ),
-              label: Text(
-                _money.toString(),
-                style: const TextStyle(fontSize: 30, color: Colors.brown),
-              ),
-              style: TextButton.styleFrom(
-                padding: const EdgeInsets.only(left: 21.5),
-              ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(top: 20),
-            child: SizedBox(
-              height: 120,
-              child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount: 3,
-                shrinkWrap: true,
-                itemBuilder: (context, index) => GestureDetector(
-                  onTap: () => chooseContainer(index),
-                  child: Container(
-                    margin: const EdgeInsets.all(5),
-                    padding: const EdgeInsets.all(5),
-                    decoration: const BoxDecoration(
-                      color: Color.fromRGBO(83, 149, 215, 1),
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(10),
-                      ),
-                    ),
-                    child: index != _randomIndex
-                        ? Image.asset(
-                            'assets/icons/chip.png',
-                          )
-                        : Image.asset(
-                            'assets/icons/coin.png',
-                          ),
+              Align(
+                alignment: Alignment.centerLeft,
+                child: TextButton.icon(
+                  onPressed: null,
+                  icon: Image.asset(
+                    'assets/icons/ball.png',
+                    scale: 12,
+                    colorBlendMode: BlendMode.hue,
+                  ),
+                  label: Text(
+                    _money.toString(),
+                    style: const TextStyle(fontSize: 30, color: Colors.brown),
+                  ),
+                  style: TextButton.styleFrom(
+                    padding: const EdgeInsets.only(left: 21.5),
                   ),
                 ),
               ),
-            ),
+              Padding(
+                padding: const EdgeInsets.only(top: 20),
+                child: SizedBox(
+                  height: 120,
+                  child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: 3,
+                    shrinkWrap: true,
+                    itemBuilder: (context, index) => GestureDetector(
+                      onTap: () => chooseContainer(index),
+                      child: Container(
+                        margin: const EdgeInsets.all(5),
+                        padding: const EdgeInsets.all(5),
+                        decoration: const BoxDecoration(
+                          color: Color.fromRGBO(83, 149, 215, 1),
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(10),
+                          ),
+                        ),
+                        child: index != _randomIndex
+                            ? Image.asset(
+                                'assets/icons/chip_image.jpg',
+                              )
+                            : Image.asset(
+                                'assets/icons/ball.png',
+                              ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              ActionsGame(
+                money: _money,
+                isStart: _isStart,
+                randomIndex: _randomIndex,
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              ElevatedButton(
+                onPressed: _startButton,
+                style: ElevatedButton.styleFrom(
+                  shape: const CircleBorder(),
+                ),
+                child: const Icon(Icons.play_arrow),
+              )
+            ],
           ),
-          ActionsGame(
-            money: _money,
-            isStart: _isStart,
-            randomIndex: _randomIndex,
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          ElevatedButton(
-            onPressed: _startButton,
-            style: ElevatedButton.styleFrom(
-              shape: const CircleBorder(),
-            ),
-            child: const Icon(Icons.play_arrow),
-          )
-        ],
-      ),
+        ),
+      ],
     );
   }
 }
